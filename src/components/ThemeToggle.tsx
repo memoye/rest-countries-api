@@ -13,14 +13,17 @@ function ModeToggle() {
   }
 
   return (
-    <button className="" onClick={handleThemeToggle}>
+    <button
+      className={`flex items-center space-x-2 p-2 font-semibold `}
+      onClick={handleThemeToggle}
+    >
       {theme === "light" ? (
         <>
-          <MoonIcon className="inline-block size-6" /> <span>Dark Mode</span>
+          <MoonIcon className="size-6" /> <span>Dark Mode</span>
         </>
       ) : (
         <>
-          <SunIcon className="inline-block size-6" /> <span>Light Mode</span>
+          <SunIcon className="size-6" /> <span>Light Mode</span>
         </>
       )}
     </button>
