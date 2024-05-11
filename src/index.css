@@ -1,0 +1,21 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* light mode */
+    --light-element: 0deg 0% 100%;
+    --light-background: 0deg 0% 98%;
+    --light-text-input: 0deg 0% 52%;
+    --light-text: 200deg 15% 8%;
+
+    /* dark mode */
+    --dark-element: 209deg 23% 22%;
+    --dark-background: 207deg 26% 17%;
+    --dark-text-input: 0deg 0% 98%;
+    --dark-text: 0deg 0% 100%;
+  }
+}
