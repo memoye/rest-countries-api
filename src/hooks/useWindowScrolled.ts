@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-function useWindowScrolled({ triggerAt = 0 }: { triggerAt?: number }) {
+function useWindowScrolled({ triggerAt = 0 }: { triggerAt: number }) {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
