@@ -135,7 +135,7 @@ function CountryDetails() {
 
             <DataItem
               term="Border Countries"
-              className="flex w-full items-center gap-2 max-sm:flex-wrap"
+              className="flex max-w-full items-center gap-2 max-sm:flex-wrap"
             >
               <CountryBorders borders={country.borders} />
             </DataItem>
@@ -148,8 +148,6 @@ function CountryDetails() {
 export default CountryDetails;
 
 function CountryBorders({ borders }: { borders: string[] }) {
-  console.log(borders);
-
   const results = useQueries({
     queries: borders.map((border) => {
       return {

@@ -1,6 +1,5 @@
 import Header from "./Header";
 import { ThemeProvider } from "@/context/theme-provider";
-import React from "react";
 
 function SharedLayout({ children }: { children: React.ReactNode }) {
   return (
