@@ -31,15 +31,11 @@ Users should be able to:
 
 ### Screenshot
 
-![](./screenshot.jpg)
+- Dark Mode
+  ![](./public/solution_dark.png)
 
-Add a screenshot of your solution. The easiest way to do this is to use Firefox to view your project, right-click the page and select "Take a Screenshot". You can choose either a full-height screenshot or a cropped one based on how long the page is. If it's very long, it might be best to crop it.
-
-Alternatively, you can use a tool like [FireShot](https://getfireshot.com/) to take the screenshot. FireShot has a free option, so you don't need to purchase it.
-
-Then crop/optimize/edit your image however you like, add it to your project, and update the file path in the image above.
-
-**Note: Delete this note and the paragraphs above when you add your screenshot. If you prefer not to add a screenshot, feel free to remove this entire section.**
+- Light Mode
+  ![](./public/solution_light.png)
 
 ### Links
 
@@ -50,42 +46,43 @@ Then crop/optimize/edit your image however you like, add it to your project, and
 
 ### Built with
 
-- Semantic HTML5 markup
-- CSS custom properties
-- Flexbox
-- CSS Grid
-- Mobile-first workflow
+- [Typescript](https://reactjs.org/) - For strong typing
 - [React](https://reactjs.org/) - JS library
-- [Next.js](https://nextjs.org/) - React framework
-- [Styled Components](https://styled-components.com/) - For styles
-
-**Note: These are just examples. Delete this note and replace the list above with your own choices**
+  - [React Router](https://reactrouter.com/en/main) - Routing
+  - [React Query (Tanstack)](https://tanstack.com/query/latest/docs/framework/react/overview) - JS library
+  - [React Spring](https://www.react-spring.dev/) - Animation library
+- [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
+- [Vite](https://vitejs.dev/guide/) - Build tool
+- Semantic HTML5 markup
+- Mobile-first workflow
 
 ### What I learned
 
-Use this section to recap over some of your major learnings while working through this project. Writing these out and providing code samples of areas you want to highlight is a great way to reinforce your own knowledge.
+I basically used this project to improve my Typescript skills. I learned a couple of techniques for efficiently typing variables.
+One of my favourite things I used a lot in this project was the `Pick` _Mapped Type_, basically the opposite of `Omit` (as I've come to learn). Pretty handy for reusing types from an existing type without having to manually type them.
 
-To see how you can add code snippets, see below:
+An example of somewhere I used it was to type the `CountryCard` _props_;
 
-```html
-<h1>Some HTML code I'm proud of</h1>
-```
+```ts
+type CountryCardProps = Pick<
+  Country,
+  "flags" | "name" | "population" | "region" | "capital" | "continents" | "cca2"
+> & { index: number };
 
-```css
-.proud-of-this-css {
-  color: papayawhip;
+function CountryCard(props: CountryCardProps) {
+  // ...
 }
 ```
 
-```js
-const proudOfThisFunc = () => {
-  console.log("🎉");
-};
+Just beautiful! 😋
+
+I also made the decision to try out _React Spring_ for animation, instead of the usual _Framer Motion_ I'm used to. It was a rather basic use, but I got a practical feel for how it works
+
+I also tried my best to store `search` and `filter` state in the _URL_ so it works seamlessly even when you paste in something like;
+
 ```
-
-If you want more help with writing markdown, we'd recommend checking out [The Markdown Guide](https://www.markdownguide.org/) to learn more.
-
-**Note: Delete this note and the content within this section and replace with your own learnings.**
+https://reactjs.org/?search=Nigeria&filter=Africa
+```
 
 ### Continued development
 
