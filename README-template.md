@@ -81,32 +81,27 @@ I also made the decision to try out _React Spring_ for animation, instead of the
 I also tried my best to store `search` and `filter` state in the _URL_ so it works seamlessly even when you paste in something like;
 
 ```
-https://reactjs.org/?search=Nigeria&filter=Africa
+https://fm-rest-countries-one.vercel.app/?search=Nigeria&filter=Africa
 ```
+
+The [link](https://fm-rest-countries-one.vercel.app/?search=Nigeria&filter=Africa) works as it should! 🥳
 
 ### Continued development
 
-Use this section to outline areas that you want to continue focusing on in future projects. These could be concepts you're still not completely comfortable with or techniques you found useful that you want to refine and perfect.
-
-**Note: Delete this note and the content within this section and replace with your own plans for continued development.**
+I'll just keep building my Typescript skills. It's fun!
 
 ### Useful resources
 
-- [Example resource 1](https://www.example.com) - This helped me for XYZ reason. I really liked this pattern and will use it going forward.
-- [Example resource 2](https://www.example.com) - This is an amazing article which helped me finally understand XYZ. I'd recommend it to anyone still learning this concept.
-
-**Note: Delete this note and replace the list above with resources that helped you during the challenge. These could come in handy for anyone viewing your solution or for yourself when you look back on this project in the future.**
+- [HTML \<dl\> Tag](https://www.w3schools.com/tags/tag_dl.asp) - I learned to use semantic description list tags
 
 ## Author
 
-- Website - [Add your name here](https://www.your-site.com)
-- Frontend Mentor - [@yourusername](https://www.frontendmentor.io/profile/yourusername)
-- Twitter - [@yourusername](https://www.twitter.com/yourusername)
+<!-- - Website - [Add your name here](https://www.your-site.com) -->
 
-**Note: Delete this note and add/remove/edit lines above based on what links you'd like to share.**
+- Frontend Mentor - [@memoye](https://www.frontendmentor.io/profile/memoye)
+- Twitter - [@memoye_io](https://www.twitter.com/memoye_io)
+- LinkedIn - [Brown Memoye](https://www.linkedin.com/in/b-me)
 
 ## Acknowledgments
 
-This is where you can give a hat tip to anyone who helped you out on this project. Perhaps you worked in a team or got some inspiration from someone else's solution. This is the perfect place to give them some credit.
-
-**Note: Delete this note and edit this section's content as necessary. If you completed this challenge by yourself, feel free to delete this section entirely.**
+Thanks me! 😊
