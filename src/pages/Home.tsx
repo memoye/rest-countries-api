@@ -1,4 +1,4 @@
-import CountryCard from "@/components/CountryCard";
+import CountryCard, { CountryCardProps } from "@/components/CountryCard";
 import FilterDropdown from "@/components/FilterDropdown";
 import SearchInput from "@/components/SearchInput";
 import Button from "@/components/ui/Button";
@@ -32,54 +32,72 @@ function Home() {
     },
   });
 
+  if (isLoading)
+    return (
+      <div className="text-sm">
+        <div className="flex flex-wrap items-center justify-between">
+          <SearchInput />
+          <FilterDropdown />
+        </div>
+        <div
+          className={`${
+            (countries && countries?.length > 0) || isLoading ? "grid" : ""
+          } my-12 grid-cols-[repeat(auto-fill,_minmax(240px,1fr))] content-center gap-8 lg:gap-12`}
+        >
+          <CountryCardsSkeleton />
+        </div>
+      </div>
+    );
+
+  if (isError || (countries && countries.length < 1)) {
+    return (
+      <div className="text-sm">
+        <div className="flex flex-wrap items-center justify-between">
+          <SearchInput />
+          <FilterDropdown />
+        </div>
+        <div className={`my-12 gap-8 lg:gap-12`}>
+          {countries && countries?.length < 1 ? (
+            <ErrorComponent
+              title="No results found!"
+              showBtn={false}
+              message={
+                search
+                  ? `Could not find country - "${search}"${
+                      filter ? ' in "' + filter + '"' : ""
+                    }" `
+                  : ""
+              }
+            />
+          ) : (
+            <ErrorComponent
+              message={error?.message}
+              recoverFn={() => refetch({ throwOnError: true })}
+            />
+          )}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="text-sm">
       <div className="flex flex-wrap items-center justify-between">
         <SearchInput />
         <FilterDropdown />
       </div>
-
       <div
-        className={`${
-          (countries && countries?.length > 0) || isLoading ? "grid" : ""
-        } my-12 grid-cols-[repeat(auto-fill,_minmax(240px,1fr))] content-center gap-8 lg:gap-12`}
+        className={`my-12 grid grid-cols-[repeat(auto-fill,_minmax(240px,1fr))] content-center gap-8 lg:gap-12`}
       >
-        {isLoading ? (
-          <CountryCardsSkeleton />
-        ) : isError ? (
-          <ErrorComponent
-            message={error.message}
-            recoverFn={() => refetch({ throwOnError: true })}
-          />
-        ) : countries && countries?.length > 0 ? (
-          countries?.map((country: any) => (
-            <CountryCard
-              continents={country.continents}
-              key={country.cca2}
-              capital={country.capital}
-              flags={country.flags}
-              name={country.name}
-              population={country.population}
-              region={country.region}
-            />
-          ))
-        ) : (
-          <ErrorComponent
-            title="No results found!"
-            showBtn={false}
-            message={
-              search
-                ? `Could not find country - "${search}"${
-                    filter ? ' in "' + filter + '"' : ""
-                  }" `
-                : ""
-            }
-          />
-        )}
+        {/* TODO: Paginate countries data */}
+        {countries?.map((country: CountryCardProps, index) => (
+          <CountryCard {...country} key={index} index={index} />
+        ))}
       </div>
     </div>
   );
 }
+
 export default Home;
 
 export function ErrorComponent({
