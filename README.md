@@ -39,8 +39,8 @@ Users should be able to:
 
 ### Links
 
-- Solution URL: [Add solution URL here](https://your-solution-url.com)
-- Live Site URL: [Add live site URL here](https://your-live-site-url.com)
+- Solution URL: [Frontend Mentor Solution](https://www.frontendmentor.io/solutions/responsive-rest-countries-api-webapp-r88gX-8liw)
+- Live Site URL: [fm-rest-countries.vercel.app](https://fm-rest-countries-one.vercel.app)
 
 ## My process
 
