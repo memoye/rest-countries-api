@@ -1,30 +1,107 @@
-# React + TypeScript + Vite
+# Frontend Mentor - REST Countries API with color theme switcher solution
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a solution to the [REST Countries API with color theme switcher challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/rest-countries-api-with-color-theme-switcher-5cacc469fec04111f7b848ca). Frontend Mentor challenges help you improve your coding skills by building realistic projects.
 
-Currently, two official plugins are available:
+## Table of contents
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [Overview](#overview)
+  - [The challenge](#the-challenge)
+  - [Screenshot](#screenshot)
+  - [Links](#links)
+- [My process](#my-process)
+  - [Built with](#built-with)
+  - [What I learned](#what-i-learned)
+  - [Continued development](#continued-development)
+  - [Useful resources](#useful-resources)
+- [Author](#author)
+- [Acknowledgments](#acknowledgments)
 
-## Expanding the ESLint configuration
+## Overview
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### The challenge
 
-- Configure the top-level `parserOptions` property like this:
+Users should be able to:
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
+- See all countries from the API on the homepage ✅
+- Search for a country using an `input` field ✅
+- Filter countries by region ✅
+- Click on a country to see more detailed information on a separate page ✅
+- Click through to the border countries on the detail page ✅
+- Toggle the color scheme between light and dark mode _(optional)_ ✅
+
+### Screenshot
+
+- Dark Mode
+  ![](./public/solution_dark.png)
+
+- Light Mode
+  ![](./public/solution_light.png)
+
+### Links
+
+- Solution URL: [Add solution URL here](https://your-solution-url.com)
+- Live Site URL: [Add live site URL here](https://your-live-site-url.com)
+
+## My process
+
+### Built with
+
+- [Typescript](https://reactjs.org/) - For strong typing
+- [React](https://reactjs.org/) - JS library
+  - [React Router](https://reactrouter.com/en/main) - Routing
+  - [React Query (Tanstack)](https://tanstack.com/query/latest/docs/framework/react/overview) - JS library
+  - [React Spring](https://www.react-spring.dev/) - Animation library
+- [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
+- [Vite](https://vitejs.dev/guide/) - Build tool
+- Semantic HTML5 markup
+- Mobile-first workflow
+
+### What I learned
+
+I basically used this project to improve my Typescript skills. I learned a couple of techniques for efficiently typing variables.
+One of my favourite things I used a lot in this project was the `Pick` _Mapped Type_, basically the opposite of `Omit` (as I've come to learn). Pretty handy for reusing types from an existing type without having to manually type them.
+
+An example of somewhere I used it was to type the `CountryCard` _props_;
+
+```ts
+type CountryCardProps = Pick<
+  Country,
+  "flags" | "name" | "population" | "region" | "capital" | "continents" | "cca2"
+> & { index: number };
+
+function CountryCard(props: CountryCardProps) {
+  // ...
 }
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Just beautiful! 😋
+
+I also made the decision to try out _React Spring_ for animation, instead of the usual _Framer Motion_ I'm used to. It was a rather basic use, but I got a practical feel for how it works
+
+I also tried my best to store `search` and `filter` state in the _URL_ so it works seamlessly even when you paste in something like;
+
+```
+https://fm-rest-countries-one.vercel.app/?search=Nigeria&filter=Africa
+```
+
+The [link](https://fm-rest-countries-one.vercel.app/?search=Nigeria&filter=Africa) works as it should! 🥳
+
+### Continued development
+
+I'll just keep building my Typescript skills. It's fun!
+
+### Useful resources
+
+- [HTML \<dl\> Tag](https://www.w3schools.com/tags/tag_dl.asp) - I learned to use semantic description list tags
+
+## Author
+
+<!-- - Website - [Add your name here](https://www.your-site.com) -->
+
+- Frontend Mentor - [@memoye](https://www.frontendmentor.io/profile/memoye)
+- Twitter - [@memoye_io](https://www.twitter.com/memoye_io)
+- LinkedIn - [Brown Memoye](https://www.linkedin.com/in/b-me)
+
+## Acknowledgments
+
+Thanks me! 😊
