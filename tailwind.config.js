@@ -5,6 +5,7 @@ export default {
   theme: {
     fontFamily: {
       sans: ["'Nunito Sans'", "ui-sans-serif", "sans-serif", "system-ui"],
+      mono: ["'DM Mono'", "ui-monospace", "monospace"],
     },
     fontWeight: {
       normal: "300",

@@ -8,18 +8,23 @@ type SelectProps = {
     displayText: string;
     value: string;
   }[];
+  defaultValue?: {
+    displayText: string;
+    value: string;
+  };
 };
 
 const Select: React.FC<SelectProps> = ({
   onChange,
   options,
   placeholder = "",
+  defaultValue,
 }) => {
   const [optionsOpen, setOptionsOpen] = useState(false);
   const [focussedIndex, setFocussedIndex] = useState(-1);
   const [selectedOption, setSelectedOption] = useState<
     (typeof options)[0] | undefined
-  >();
+  >(defaultValue);
 
   function incrementFocussed() {
     setFocussedIndex((prev) => (prev < options.length - 1 ? prev + 1 : 0));

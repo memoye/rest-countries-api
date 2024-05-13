@@ -23,7 +23,10 @@ function SearchInput() {
   );
 
   return (
-    <form className="min-w-32 max-sm:w-full">
+    <form
+      onSubmit={(event) => event.preventDefault()}
+      className="min-w-32 max-sm:w-full"
+    >
       <div className="relative w-full overflow-hidden rounded text-light-text-input dark:text-dark-text-input">
         <label
           htmlFor="search"

@@ -5,7 +5,7 @@ import { Country } from "@/lib/definitions";
 
 export type CountryCardProps = Pick<
   Country,
-  "flags" | "name" | "population" | "region" | "capital"
+  "flags" | "name" | "population" | "region" | "capital" | "continents"
 >;
 
 function CountryCard({
@@ -14,6 +14,7 @@ function CountryCard({
   name,
   population,
   region,
+  continents = [],
 }: CountryCardProps) {
   const navigate = useNavigate();
 
@@ -24,7 +25,7 @@ function CountryCard({
   return (
     <div
       onClick={handleNavigate}
-      className="cursor-pointer overflow-hidden rounded bg-light-element drop-shadow-lg transition hover:brightness-95 dark:bg-dark-element"
+      className="max-w-xs cursor-pointer overflow-hidden rounded bg-light-element drop-shadow-lg transition hover:brightness-95 dark:bg-dark-element"
     >
       <figure className="mb-2 h-1/2 min-h-44 overflow-hidden">
         <img
@@ -36,6 +37,7 @@ function CountryCard({
 
       <div className="px-4 py-2 pb-10">
         <h2 className="mb-3 text-lg font-bold">{name.official}</h2>
+        <span className="sr-only">Continents: {continents.join(", ")}</span>
         <dl className="space-y-1.5">
           <DataItem term="Population">{formatNumber(population)}</DataItem>
           <DataItem term="Region">{region}</DataItem>
