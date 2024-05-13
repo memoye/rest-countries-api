@@ -7,11 +7,12 @@ import { useSpring, animated } from "@react-spring/web";
 
 export type CountryCardProps = Pick<
   Country,
-  "flags" | "name" | "population" | "region" | "capital" | "continents"
+  "flags" | "name" | "population" | "region" | "capital" | "continents" | "cca2"
 > & { index: number };
 
 function CountryCard({
   capital,
+  cca2,
   flags,
   name,
   population,
@@ -22,7 +23,7 @@ function CountryCard({
   const navigate = useNavigate();
 
   function handleNavigate() {
-    navigate(`/country/${"somewhere"}`);
+    navigate(`/country/${cca2}`);
   }
 
   const springs = useSpring({
@@ -44,7 +45,7 @@ function CountryCard({
     to: { y: 0, x: 0, opacity: 1 },
     reset: true,
     config: {
-      duration: 200,
+      duration: 150,
       precision: 0.3,
     },
   });
@@ -52,12 +53,12 @@ function CountryCard({
   return (
     <animated.div
       onClick={handleNavigate}
-      className="max-w-xs cursor-pointer overflow-hidden rounded bg-light-element drop-shadow-lg transition hover:brightness-95 dark:bg-dark-element"
+      className="group max-w-xs cursor-pointer overflow-hidden rounded bg-light-element drop-shadow-lg transition hover:brightness-95 dark:bg-dark-element"
       style={springs}
     >
       <figure className="mb-2 h-1/2 min-h-44 overflow-hidden">
         <img
-          className="h-full w-full object-cover object-center"
+          className="h-full w-full object-cover object-center lg:transition-transform lg:group-hover:scale-105"
           src={flags.svg || flags.png}
           alt={flags.alt}
         />

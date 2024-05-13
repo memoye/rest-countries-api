@@ -2,9 +2,9 @@ import { createBrowserRouter } from "react-router-dom";
 import App from "./App";
 
 // pages
-import Home from "./pages/Home";
 import CountryDetails from "./pages/CountryDetails";
-import { CountryDetailsSkeleton } from "./components/ui/Skeletons";
+import ErrorElement from "./components/ErrorElement";
+import Home from "./pages/Home";
 
 export const router = createBrowserRouter([
   {
@@ -20,5 +20,6 @@ export const router = createBrowserRouter([
         element: <CountryDetails />,
       },
     ],
+    errorElement: <ErrorElement />,
   },
 ]);

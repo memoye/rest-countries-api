@@ -1,18 +1,73 @@
-import Button from "@/components/ui/Button";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { useQueries } from "@tanstack/react-query";
 import { ArrowLongLeftIcon } from "@heroicons/react/24/solid";
 
-import data from "../../starter-files/data.json";
+// lib
 import { formatNumber } from "@/lib/utils";
+import { Country } from "@/lib/definitions";
+import { getCountries } from "@/lib/api";
 
-const country = data.filter((place) => place.name.toLowerCase() == "canada")[0];
+// components
+import {
+  CountryDetailsSkeleton,
+  DataItemSkeleton,
+} from "@/components/ui/Skeletons";
+import Button from "@/components/ui/Button";
+import ErrorElement from "@/components/ErrorElement";
+
+// hook
+import useCountries from "@/hooks/useCountries";
+
+type Details = Pick<
+  Country,
+  | "name"
+  | "borders"
+  | "cca2"
+  | "flags"
+  | "population"
+  | "region"
+  | "currencies"
+  | "subregion"
+  | "tld"
+  | "languages"
+  | "capital"
+>;
+
+const COUNTRY_DETAILS_FIELDS = [
+  "name",
+  "borders",
+  "cca2",
+  "flags",
+  "population",
+  "region",
+  "currencies",
+  "subregion",
+  "tld",
+  "languages",
+  "capital",
+];
 
 function CountryDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
 
+  const { data, isError, error, isLoading } = useCountries({
+    endpoint: `/alpha/${id}`,
+    queryParams: {
+      fields: COUNTRY_DETAILS_FIELDS.join(),
+    },
+  });
+
   function handleBackButton() {
     navigate(-1);
+  }
+
+  const country = data as Details;
+
+  if (isLoading) return <CountryDetailsSkeleton />;
+
+  if (isError) {
+    return <ErrorElement message={error.message || "Something went wrong."} />;
   }
 
   return (
@@ -25,49 +80,56 @@ function CountryDetails() {
         <figure className="mx-auto flex aspect-video w-full max-w-lg flex-1 place-items-center self-stretch overflow-hidden rounded lg:mx-0">
           <img
             className="h-full w-full bg-light-element dark:bg-dark-element"
-            src={country.flag}
-            alt="flag"
+            src={country.flags.svg || country.flags.png}
+            alt={country.flags.alt || country.name.common}
           />
         </figure>
 
         <div className="box-border px-8 max-sm:mx-auto lg:mx-0 lg:max-w-[50%]">
-          <h2 className="my-6 text-2xl font-bold">{country.name}</h2>
+          <h2 className="my-6 text-2xl font-bold">{country.name.common}</h2>
 
           <dl className="flex flex-col flex-wrap items-start justify-between gap-2 md:flex-row lg:gap-4 ">
             <div className="space-y-3">
-              <DataItem term="Native Name">{country.nativeName}</DataItem>
+              <DataItem term="Native Name">
+                {Object.keys(country.name.nativeName).map((key, i) => {
+                  return (
+                    <span key={key}>
+                      {country.name.nativeName[key].common}
+                      {Object.keys(country.name.nativeName)[i + 1] ? ", " : ""}
+                    </span>
+                  );
+                })}
+              </DataItem>
               <DataItem term="Population">
                 {formatNumber(country.population)}
               </DataItem>
               <DataItem term="Region">{country.region}</DataItem>
               <DataItem term="Sub Region">{country.subregion}</DataItem>
-              <DataItem term="Capital">{country.capital}</DataItem>
+              <DataItem term="Capital">{country.capital.join(", ")}</DataItem>
             </div>
 
             <div className="space-y-3">
-              <DataItem term="Top Level Domain">
-                {country.topLevelDomain}
-              </DataItem>
+              <DataItem term="Top Level Domain">{country.tld}</DataItem>
               <DataItem term="Currencies">
-                {country.currencies?.map((currency, i) => (
-                  <span key={currency.code}>
-                    {currency.name}{" "}
-                    {i < country.currencies.length - 1 ? ", " : ""}
-                  </span>
-                ))}
+                {Object.keys(country.currencies).map((key, i) => {
+                  return (
+                    <span key={key}>
+                      {country.currencies[key].name} - "
+                      {country.currencies[key].symbol}"
+                      {!Object.keys(country.currencies)[i + 1] ? ", " : ""}
+                    </span>
+                  );
+                })}
               </DataItem>
               <DataItem term="Languages">
-                {country.languages?.map((language, i) => (
-                  <span key={language.iso639_2}>
-                    {i < country.languages.length - 1
-                      ? language.name
-                      : ` and ${language.name}`}
-                    {i < country.languages.length - 1 &&
-                    country.languages.length > 2
-                      ? ", "
-                      : ""}
-                  </span>
-                ))}
+                {Object.keys(country.languages).map((key, i) => {
+                  return (
+                    <span key={key}>
+                      {country.languages[key]}
+                      {Object.keys(country.languages)[i + 1] ? ", " : ""}
+                    </span>
+                  );
+                })}
               </DataItem>
             </div>
 
@@ -75,11 +137,7 @@ function CountryDetails() {
               term="Border Countries"
               className="flex w-full items-center gap-2 max-sm:flex-wrap"
             >
-              {["France", "Germany", "Netherlands"].map((country, i) => (
-                <Button key={i} className="flex-1" asChild>
-                  <Link to={`/`}>{country}</Link>
-                </Button>
-              ))}
+              <CountryBorders borders={country.borders} />
             </DataItem>
           </dl>
         </div>
@@ -88,6 +146,37 @@ function CountryDetails() {
   );
 }
 export default CountryDetails;
+
+function CountryBorders({ borders }: { borders: string[] }) {
+  console.log(borders);
+
+  const results = useQueries({
+    queries: borders.map((border) => {
+      return {
+        queryKey: [`/alpha/${border}`],
+        queryFn: async () => getCountries(`/alpha/${border}?fields=name,cca2`),
+      };
+    }),
+  });
+
+  return results.map((result, i) => {
+    const { isLoading, data, error, isError } = result;
+    const borderData = data as Pick<Details, "name" | "cca2">;
+
+    if (isLoading) return <DataItemSkeleton key={data} />;
+
+    if (isError) {
+      console.error("Boundary fetch error", error);
+      return error.message;
+    }
+
+    return (
+      <Button key={i} className="min-w-fit flex-1" asChild>
+        <Link to={`/country/${borderData.cca2}`}>{borderData.name.common}</Link>
+      </Button>
+    );
+  });
+}
 
 export function DataItem({
   term,
@@ -100,9 +189,9 @@ export function DataItem({
 }) {
   return (
     <div
-      className={`flex flex-wrap items-start space-x-1  lg:items-center ${
+      className={`flex flex-wrap items-start space-x-1 ${
         className ? "mt-4 flex-col gap-2 lg:flex-row" : ""
-      }`}
+      } ${term === "Border Countries" ? "lg:items-center" : ""}`}
     >
       <dt className="min-w-fit font-semibold">{term}: </dt>
       <dd className={`max-w-sm font-normal ${className}`}>{children}</dd>

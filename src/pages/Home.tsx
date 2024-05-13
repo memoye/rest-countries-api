@@ -4,6 +4,7 @@ import SearchInput from "@/components/SearchInput";
 import Button from "@/components/ui/Button";
 import { CountryCardsSkeleton } from "@/components/ui/Skeletons";
 import useCountries from "@/hooks/useCountries";
+import useFilteredData from "@/hooks/useFilteredData";
 import { Link } from "react-router-dom";
 
 const CARD_FIELDS = [
@@ -17,20 +18,14 @@ const CARD_FIELDS = [
 ];
 
 function Home() {
-  const {
-    isLoading,
-    filteredData: countries,
-    isError,
-    error,
-    search,
-    filter,
-    refetch,
-  } = useCountries({
+  const { isLoading, isError, error, data, refetch } = useCountries({
     endpoint: "/all",
     queryParams: {
       fields: CARD_FIELDS.join(),
     },
   });
+
+  const { filteredData: countries, search, filter } = useFilteredData({ data });
 
   if (isLoading)
     return (
@@ -61,10 +56,11 @@ function Home() {
             <ErrorComponent
               title="No results found!"
               showBtn={false}
+              image="/undraw_empty_re_opql.svg"
               message={
                 search
                   ? `Could not find country - "${search}"${
-                      filter ? ' in "' + filter + '"' : ""
+                      filter ? ' in "' + filter + "." : ""
                     }" `
                   : ""
               }
@@ -89,7 +85,7 @@ function Home() {
       <div
         className={`my-12 grid grid-cols-[repeat(auto-fill,_minmax(240px,1fr))] content-center gap-8 lg:gap-12`}
       >
-        {/* TODO: Paginate countries data */}
+        {/* TODO: Paginate countries */}
         {countries?.map((country: CountryCardProps, index) => (
           <CountryCard {...country} key={index} index={index} />
         ))}
@@ -105,17 +101,19 @@ export function ErrorComponent({
   recoverFn,
   title,
   showBtn = true,
+  image,
 }: {
   recoverFn?: () => any;
   message?: string;
   title?: string;
   showBtn?: boolean;
+  image?: string;
 }) {
   return (
     <div className="my-14 grid place-items-center gap-2 ">
       <img
-        className="mb-6 max-w-32"
-        src="/undraw_warning_re_eoyh.svg"
+        className="mb-6 max-w-44"
+        src={image || "/undraw_warning_re_eoyh.svg"}
         alt="Error occured illustration"
       />
       <p className="text-lg font-semibold">
