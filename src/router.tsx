@@ -4,6 +4,7 @@ import App from "./App";
 // pages
 import Home from "./pages/Home";
 import CountryDetails from "./pages/CountryDetails";
+import { CountryDetailsSkeleton } from "./components/ui/Skeletons";
 
 export const router = createBrowserRouter([
   {

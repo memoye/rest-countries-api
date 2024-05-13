@@ -19,11 +19,13 @@ function ModeToggle() {
     >
       {theme === "light" ? (
         <>
-          <MoonIcon className="size-6" /> <span>Dark Mode</span>
+          <MoonIcon className="size-6" />{" "}
+          <span className="max-[330px]:sr-only">Dark Mode</span>
         </>
       ) : (
         <>
-          <SunIcon className="size-6" /> <span>Light Mode</span>
+          <SunIcon className="size-6" />{" "}
+          <span className="max-[330px]:sr-only">Light Mode</span>
         </>
       )}
     </button>
