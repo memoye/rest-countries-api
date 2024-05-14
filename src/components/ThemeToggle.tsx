@@ -17,7 +17,7 @@ function ModeToggle() {
       className={`flex items-center space-x-2 p-2 font-semibold `}
       onClick={handleThemeToggle}
     >
-      {theme === "dark" ? (
+      {theme === "light" ? (
         <>
           <MoonIcon className="size-6" />{" "}
           <span className="max-[330px]:sr-only">Dark Mode</span>
