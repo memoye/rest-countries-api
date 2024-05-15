@@ -1,6 +1,6 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useQueries } from "@tanstack/react-query";
-import { ArrowLongLeftIcon } from "@heroicons/react/24/solid";
+import { ArrowLongLeftIcon, HomeIcon } from "@heroicons/react/24/solid";
 
 // lib
 import { formatNumber } from "@/lib/utils";
@@ -72,10 +72,15 @@ function CountryDetails() {
 
   return (
     <div className="py-4 text-base">
-      <Button onClick={handleBackButton} withIcon>
-        <ArrowLongLeftIcon className="size-6" /> Back
-      </Button>
-
+      <div className="flex items-center gap-2">
+        <Button onClick={handleBackButton} withIcon>
+          <ArrowLongLeftIcon className="size-6" /> Back
+        </Button>
+        <Link to={"/"} title="Back to Homepage">
+          <span className="sr-only">Home</span>
+          <HomeIcon className={"size-6"} />
+        </Link>
+      </div>
       <section className="mt-12 flex w-full flex-col  items-center gap-12 lg:flex-row ">
         <figure className="mx-auto flex aspect-video w-full max-w-lg flex-1 place-items-center self-stretch overflow-hidden rounded lg:mx-0">
           <img

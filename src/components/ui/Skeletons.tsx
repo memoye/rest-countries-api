@@ -1,6 +1,6 @@
-import { ArrowLongLeftIcon } from "@heroicons/react/24/solid";
+import { ArrowLongLeftIcon, HomeIcon } from "@heroicons/react/24/solid";
 import Button from "./Button";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const shimmer =
   "before:absolute relative overflow-hidden before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-gradient-to-r before:from-transparent dark:before:via-dark-background before:via-light-background before:to-transparent";
@@ -16,9 +16,14 @@ export function CountryDetailsSkeleton() {
 
   return (
     <div className={`py-4 text-base`}>
-      <Button onClick={handleBackButton} withIcon>
-        <ArrowLongLeftIcon className="size-6" /> Back
-      </Button>
+      <div className="flex items-center gap-2">
+        <Button onClick={handleBackButton} withIcon>
+          <ArrowLongLeftIcon className="size-6" /> Back
+        </Button>
+        <Link to={"/"}>
+          <HomeIcon className={"size-6"} />
+        </Link>
+      </div>
 
       <section className="mt-12 flex w-full flex-col  items-center gap-12 lg:flex-row ">
         <div
